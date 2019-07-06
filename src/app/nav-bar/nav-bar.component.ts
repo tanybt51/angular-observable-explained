@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { switchMap } from 'rxjs/operators'
+import { map,takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 import { AppService } from '../app.service';
 
 @Component({
@@ -8,15 +9,22 @@ import { AppService } from '../app.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  destroy$ = new Subject();
   constructor(public app: AppService) { }
   name = "";
    ngOnInit() {
-    this.app.Name.pipe(
-      switchMap((val: string) => {
+    this.start()
+  }
+  start(){
+this.app.Name.pipe(
+      map((val: string) => {
         this.name = val;
-        return val;
-      })
+      }),
+      takeUntil(this.destroy$)
     ).subscribe();
+  }
+  stop(){
+    this.destroy$.next();
   }
 
 }
