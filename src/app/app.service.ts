@@ -1,18 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Observable,BehaviorSubject } from 'rxjs'
+import { Observable,Subject, BehaviorSubject, ReplaySubject, AsyncSubject } from 'rxjs'
 @Injectable()
 export class AppService {
 
- public name$ = new BehaviorSubject<string>('first');
+  public behaviorSubject$ = new BehaviorSubject<string>('first');
+  public replaySubject$ = new ReplaySubject<string>(3);
+  public asyncSubject$ = new AsyncSubject<string>();
+  public subject$ = new Subject<string>();
   constructor() {
 
 
   }
   public setName(val: string) {
-    this.name$.next(val);
+    this.behaviorSubject$.next(val);
+    this.replaySubject$.next(val);
+    this.asyncSubject$.next(val);
+    this.subject$.next(val);
   }
-  public get Name():Observable<string>{
-    return this.name$.asObservable();
+  public Name(type: string): Observable<string> {
+    let observable:Observable<string>;
+    switch (type) {
+      case 'behavior':
+      observable = this.behaviorSubject$.asObservable();
+        break;
+      case 'replay':
+      observable = this.replaySubject$.asObservable();
+        break;
+      case 'async':
+      observable = this.asyncSubject$.asObservable();
+        break;
+      default:
+      observable = this.subject$.asObservable();
+        break;
+
+    }
+        return observable;
+    
   }
 
 }

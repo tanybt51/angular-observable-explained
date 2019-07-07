@@ -1,0 +1,11 @@
+:host(){
+background-color: rgb(155, 200, 206);
+height: 200px;
+width: 200px;
+margin: 6px;
+
+  font-family: Lato;
+}
+h3{
+  margin-left: 4px;
+}

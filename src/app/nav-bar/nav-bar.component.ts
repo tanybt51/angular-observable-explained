@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { map,takeUntil } from 'rxjs/operators'
+import { map, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { AppService } from '../app.service';
 
@@ -12,18 +12,18 @@ export class NavBarComponent implements OnInit {
   destroy$ = new Subject();
   constructor(public app: AppService) { }
   name = "";
-   ngOnInit() {
+  ngOnInit() {
     this.start()
   }
-  start(){
-this.app.Name.pipe(
+  start() {
+    this.app.Name.pipe(
       map((val: string) => {
         this.name = val;
       }),
       takeUntil(this.destroy$)
     ).subscribe();
   }
-  stop(){
+  stop() {
     this.destroy$.next();
   }
 

@@ -2,6 +2,5 @@
 <button (click)="send(name)">Click</button> <input type="" [(ngModel)]="name">
 <div>
 
-	<app-nav-bar></app-nav-bar>
-	<app-patient></app-patient>
+  <app-child *ngFor="let t of list" [type]="t"></app-child>
 </div>

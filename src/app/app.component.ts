@@ -8,8 +8,9 @@ import { AppService } from './app.service';
 })
 export class AppComponent {
   name = 'Angular';
+  list = ['behavior','replay','async'];
   constructor(public app: AppService) { }
   send(value: string) {
-    this.app.name$.next(value);
+    this.app.setName(value);
   }
 }
